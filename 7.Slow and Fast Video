@@ -1,0 +1,41 @@
+import cv2
+
+# 1. Load the video file
+video_path = r"C:\Users\Deepika\Desktop\MyProject\videoo.mp4"
+cap = cv2.VideoCapture(video_path)
+
+if not cap.isOpened():
+    print("Error: Could not open video.")
+    exit()
+
+# Set playback speed (delay in milliseconds)
+# Lower delay = Faster speed | Higher delay = Slower speed
+speed_delay = 25 
+
+print("Press 'q' to quit, 's' for Slow, 'f' for Fast, 'n' for Normal")
+
+while cap.isOpened():
+    ret, frame = cap.read()
+
+    # If the video ends, break the loop
+    if not ret:
+        break
+
+    # 2. Display the frame
+    cv2.imshow('Video Playback', frame)
+
+    # 3. Handle Speed Controls
+    key = cv2.waitKey(speed_delay) & 0xFF
+    
+    if key == ord('q'):    # Quit
+        break
+    elif key == ord('s'):  # Slow Motion
+        speed_delay = 100
+    elif key == ord('f'):  # Fast Motion
+        speed_delay = 1
+    elif key == ord('n'):  # Normal Speed
+        speed_delay = 25
+
+# Release resources
+cap.release()
+cv2.destroyAllWindows()
