@@ -1,0 +1,30 @@
+import cv2
+import time
+
+cap = cv2.VideoCapture("rcbvideo.mp4")  # Put correct video file name
+
+if not cap.isOpened():
+    print("Error opening video file")
+    exit()
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    # Normal
+    cv2.imshow("Normal", frame)
+
+    # Slow motion
+    time.sleep(0.05)
+    cv2.imshow("Slow", frame)
+
+    # Fast motion (skip one frame)
+    cap.read()
+    cv2.imshow("Fast", frame)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
